@@ -187,12 +187,45 @@ Image convolve_image(Image image, ConvKernel ker){
     Image convolved_image;
     convolved_image.height = 0;
     convolved_image.width = 0;
+
+    convolved_image.height = image.height - ker.size + 1;
+    convolved_image.width = image.width - ker.size + 1;
+    int new_row = 0 ;
+    for(int row =0 ; row+ker.size <= image.height; ++row, ++new_row){
+        int new_col = 0 ;
+        for(int col = 0; col+ker.size <= image.width; ++col,++new_col){
+            double new_r = 0;
+            double new_g = 0;
+            double new_b = 0;
+            for(int k_row = 0; k_row < ker.size; k_row++ ){
+                for (int k_col = 0; k_col < ker.size; k_col++)
+                {
+                   new_r += image.pixels[row+k_row][col+k_col].r * ker.kernel[k_row][k_col];
+                   new_g += image.pixels[row+k_row][col+k_col].g * ker.kernel[k_row][k_col];
+                   new_b += image.pixels[row+k_row][col+k_col].b * ker.kernel[k_row][k_col];
+                }
+                
+            }
+        convolved_image.pixels[new_row][new_col].r = new_r;
+        convolved_image.pixels[new_row][new_col].g = new_g;
+        convolved_image.pixels[new_row][new_col].b = new_b;
+
+        }
+    }
+
     return convolved_image;
 }
 
 ConvKernel generate_average_kernel(int size){
     ConvKernel ker;
     ker.size = 0;
+
+    for(int row = 0; row < size; row++){
+        for(int col = 0; col < size; col++){
+            ker.kernel[row][col] = 1/(size*size);
+        }
+    }
+    ker.size = size;
     return ker;
 }
 

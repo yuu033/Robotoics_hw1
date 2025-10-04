@@ -137,7 +137,7 @@ void asciiprint(Image image){
             else if(value<=255) ch = '@';
             printf("%c%c",ch,ch);
         }
-
+        printf("\n");
     }
 
 }

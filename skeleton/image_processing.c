@@ -119,6 +119,27 @@ Image grayscale_image(Image image){
 //TASK 1
 void asciiprint(Image image){
 
+    int value = 0;
+    char ch ;
+    for (int i = 0; i < image.height; i++){  
+
+        for(int j = 0; j < image.width; j++){ 
+            
+            value = floor(0.299 * image.pixels[i][j].r + 0.587 * image.pixels[i][j].g + 0.114 * image.pixels[i][j].b);
+
+            if(value >=0 && value<=31) ch = '.';
+            else if(value<=63) ch = ',';
+            else if(value<=95) ch = ':';
+            else if(value<=127) ch = ';';
+            else if(value<=159) ch = '*';
+            else if(value<=191) ch = '#';
+            else if(value<=223) ch = '$';
+            else if(value<=255) ch = '@';
+            printf("%c%c",ch,ch);
+        }
+
+    }
+
 }
 
 //TASK 2
@@ -126,6 +147,38 @@ Image downscale_image(Image image, int downscale){
     Image image_resized;
     image_resized.height = 0;
     image_resized.width = 0;
+
+    int new_x = 0;
+
+    for(int i=0; i< image.height;i+=image.height/downscale,++new_x){
+        int new_y = 0;
+        for(int j = 0; j < image.width;j+=image.width/downscale,++new_y){
+            int total_R = 0;
+            int total_G = 0;
+            int total_B = 0;
+            int total_num = 0;
+
+            for(int x = i; x< i+image.height/downscale; x++ ){
+
+                for(int y = j; y< j+image.width/downscale; y++ ){
+                    
+                    total_R += image.pixels[x][y].r;
+                    total_G += image.pixels[x][y].g;
+                    total_B += image.pixels[x][y].b;
+                    total_num ++;
+                }
+            }
+            image_resized.pixels[new_x][new_y].r = total_R/total_num;
+            image_resized.pixels[new_x][new_y].g = total_G/total_num;
+            image_resized.pixels[new_x][new_y].b = total_B/total_num;
+
+        }
+    }
+
+    image_resized.height = image.height/downscale;
+    image_resized.width = image.width/downscale;
+
+
     return image_resized;
 }
 

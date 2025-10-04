@@ -1,0 +1,43 @@
+[OpenCV-Lite 1.0 Plays Tic-Tac-Toe]
+File Path to Process: Opening File images/board3.bmp...
+What would you like to do?
+0. Open another file
+1. Print Image in the Terminal
+2. Downscale
+3. Average Blurring
+4. Gaussian Blurring
+5. Edge Extraction
+6. Extract Tic-Tac-Toe Game
+7. Debug Mode
+8. Save Image
+9. Play Tic-Tac-Toe Interactively
+10. Exit
+Choose Option (0-10): [DEBUG Mode]
+What would you like to do?
+1. Image Infodump
+2. Test Play Tic-Tac-Toe Function
+3. Average Kernel Generation 
+4. Gaussian Kernel Generation 
+5. Extract Game Test
+Choose Option (1-5): ===[Board]===
+
+    O|X| 
+    -+-+-
+    X|O| 
+    -+-+-
+     | | 
+
+=============
+What would you like to do?
+0. Open another file
+1. Print Image in the Terminal
+2. Downscale
+3. Average Blurring
+4. Gaussian Blurring
+5. Edge Extraction
+6. Extract Tic-Tac-Toe Game
+7. Debug Mode
+8. Save Image
+9. Play Tic-Tac-Toe Interactively
+10. Exit
+Choose Option (0-10): 

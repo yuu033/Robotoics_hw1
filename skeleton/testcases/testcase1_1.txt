@@ -1,0 +1,3 @@
+images/torus.bmp
+1
+10

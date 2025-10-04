@@ -1,0 +1,164 @@
+[OpenCV-Lite 1.0 Plays Tic-Tac-Toe]
+File Path to Process: Opening File images/robot.bmp...
+What would you like to do?
+0. Open another file
+1. Print Image in the Terminal
+2. Downscale
+3. Average Blurring
+4. Gaussian Blurring
+5. Edge Extraction
+6. Extract Tic-Tac-Toe Game
+7. Debug Mode
+8. Save Image
+9. Play Tic-Tac-Toe Interactively
+10. Exit
+Choose Option (0-10): Please enter your move (X):===[Board]===
+
+    X| | 
+    -+-+-
+     | | 
+    -+-+-
+     | | 
+
+=============
+Please enter your move (O):===[Board]===
+
+    X| | 
+    -+-+-
+     |O| 
+    -+-+-
+     | | 
+
+=============
+Please enter your move (X):===[Board]===
+
+    X| | 
+    -+-+-
+     |O| 
+    -+-+-
+     | |X
+
+=============
+Please enter your move (O):===[Board]===
+
+    X| |O
+    -+-+-
+     |O| 
+    -+-+-
+     | |X
+
+=============
+Please enter your move (X):===[Board]===
+
+    X| |O
+    -+-+-
+     |O| 
+    -+-+-
+    X| |X
+
+=============
+Please enter your move (O):===[Board]===
+
+    X| |O
+    -+-+-
+    O|O| 
+    -+-+-
+    X| |X
+
+=============
+Please enter your move (X):===[Board]===
+
+    X| |O
+    -+-+-
+    O|O| 
+    -+-+-
+    X|X|X
+
+=============
+X wins
+Game History:
+===[Board]===
+
+     | | 
+    -+-+-
+     | | 
+    -+-+-
+     | | 
+
+=============
+===[Board]===
+
+    X| | 
+    -+-+-
+     | | 
+    -+-+-
+     | | 
+
+=============
+===[Board]===
+
+    X| | 
+    -+-+-
+     |O| 
+    -+-+-
+     | | 
+
+=============
+===[Board]===
+
+    X| | 
+    -+-+-
+     |O| 
+    -+-+-
+     | |X
+
+=============
+===[Board]===
+
+    X| |O
+    -+-+-
+     |O| 
+    -+-+-
+     | |X
+
+=============
+===[Board]===
+
+    X| |O
+    -+-+-
+     |O| 
+    -+-+-
+    X| |X
+
+=============
+===[Board]===
+
+    X| |O
+    -+-+-
+    O|O| 
+    -+-+-
+    X| |X
+
+=============
+===[Board]===
+
+    X| |O
+    -+-+-
+    O|O| 
+    -+-+-
+    X|X|X
+
+=============
+What would you like to do?
+0. Open another file
+1. Print Image in the Terminal
+2. Downscale
+3. Average Blurring
+4. Gaussian Blurring
+5. Edge Extraction
+6. Extract Tic-Tac-Toe Game
+7. Debug Mode
+8. Save Image
+9. Play Tic-Tac-Toe Interactively
+10. Exit
+Choose Option (0-10): 

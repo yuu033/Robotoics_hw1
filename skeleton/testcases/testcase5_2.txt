@@ -1,0 +1,4 @@
+images/board3.bmp
+7
+5
+10

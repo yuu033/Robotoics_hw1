@@ -1,0 +1,5 @@
+images/robot.bmp
+7
+3
+6
+10

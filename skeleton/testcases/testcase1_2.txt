@@ -1,0 +1,3 @@
+images/daylight.bmp
+1
+10

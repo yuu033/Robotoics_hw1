@@ -150,17 +150,17 @@ Image downscale_image(Image image, int downscale){
 
     int new_x = 0;
 
-    for(int i=0; i< image.height;i+=image.height/downscale,++new_x){
+    for(int i=0; i< image.height;i+=downscale,++new_x){
         int new_y = 0;
-        for(int j = 0; j < image.width;j+=image.width/downscale,++new_y){
+        for(int j = 0; j < image.width;j+=downscale,++new_y){
             int total_R = 0;
             int total_G = 0;
             int total_B = 0;
             int total_num = 0;
 
-            for(int x = i; x< i+image.height/downscale; x++ ){
+            for(int x = i; x< i+downscale; x++ ){
 
-                for(int y = j; y< j+image.width/downscale; y++ ){
+                for(int y = j; y< j+downscale; y++ ){
                     
                     total_R += image.pixels[x][y].r;
                     total_G += image.pixels[x][y].g;

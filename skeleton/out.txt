@@ -1,5 +1,5 @@
 [OpenCV-Lite 1.0 Plays Tic-Tac-Toe]
-File Path to Process: Opening File images/grids.bmp...
+File Path to Process: Opening File images/robot.bmp...
 What would you like to do?
 0. Open another file
 1. Print Image in the Terminal

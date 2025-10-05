@@ -162,6 +162,22 @@ Game extract_game(Image image){
     temp.height = image.height/3;
     temp.width = image.width/3;
 
+    int outrow = 0;
+    for(int row = 0; row < image.height; row+=image.height/3,outrow++){
+        int outcol = 0;
+        for(int col = 0; col < image.width; col+=image.width/3,outcol++){
+            
+            for(int srow = 0; srow<image.height/3;srow++){
+                for(int scol = 0; scol<image.width/3;scol++){
+                    temp.pixels[srow][scol].r = image.pixels[srow+row][scol+col].r;
+                    temp.pixels[srow][scol].g = image.pixels[srow+row][scol+col].g;
+                    temp.pixels[srow][scol].b = image.pixels[srow+row][scol+col].b;
+                }
+            }
+            game.grid[outrow][outcol] = read_mark(temp);
+        }
+    }
+
     return game;
 }
 

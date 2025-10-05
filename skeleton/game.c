@@ -190,7 +190,7 @@ int O_win_check(Game game){
     }
 
     for(int col = 0; col<3;col++){
-        if(game.grid[0][col] == 1 && game.grid[0][col] == 1 && game.grid[0][col] == 1){
+        if(game.grid[0][col] == 1 && game.grid[1][col] == 1 && game.grid[2][col] == 1){
             return 1;
         }
     }
@@ -309,6 +309,7 @@ int play_interactively(GameHistory* game_history){
                     }
                 }
                 printf("Game History:\n");
+                print_game(history);
                 for(int Output_turn = 0; Output_turn < game_history->turn; Output_turn++){
                     int row = game_history->grid[Output_turn][0];
                     int col = game_history->grid[Output_turn][1];
@@ -354,6 +355,7 @@ int play_interactively(GameHistory* game_history){
                     }
                 }
                 printf("Game History:\n");
+                print_game(history);
                 for(int Output_turn = 0; Output_turn < game_history->turn; Output_turn++){
                     int row = game_history->grid[Output_turn][0];
                     int col = game_history->grid[Output_turn][1];

@@ -220,8 +220,6 @@ ConvKernel generate_average_kernel(int size){
     ConvKernel ker;
     ker.size = size;
 
-
-
     for(int row = 0; row < size; row++){
         for(int col = 0; col < size; col++){
             ker.kernel[row][col] = 1.0/( (double)(size) * (double)(size) );
@@ -236,7 +234,7 @@ ConvKernel generate_gaussian_kernel(int r, double sigma){
     ker.size = 2*r+1;
 
     for(int row = 0; row < ker.size; row++){
-        
+
         for(int col = 0; col < ker.size; col++){
             ker.kernel[row][col] = (1.0/(2.0*acos(-1.0)*sigma*sigma))*exp((-1/(2*sigma*sigma))*((row-r)*(row-r)+(col-r)*(col-r))) ;
         }
@@ -246,9 +244,136 @@ ConvKernel generate_gaussian_kernel(int r, double sigma){
 }
 
 // TASK 4
+
+typedef struct FImage{
+    int height;
+    int width;
+    double pixels[512][512];
+}FImage;
+
+FImage gray_FImage(Image image){
+    FImage gfimage;
+    gfimage.height = image.height;
+    gfimage.width = image.width;
+
+    for(int i=0; i<image.height; i++){
+        for(int j=0; j<image.width; j++){
+            double V = (double)(image.pixels[i][j].r * 0.299 + image.pixels[i][j].g * 0.587 + image.pixels[i][j].b * 0.114);
+            gfimage.pixels[i][j] = V;
+        }
+    }
+    return gfimage;
+}
+
+FImage convolve_fimage(FImage fimage, ConvKernel ker){
+    FImage convolved_fimage;
+
+    convolved_fimage.height = 0;
+    convolved_fimage.width = 0;
+
+    convolved_fimage.height = fimage.height - ker.size + 1;
+    convolved_fimage.width = fimage.width - ker.size + 1;
+
+    for(int row =0 ; row+ker.size <= fimage.height; ++row){
+        for(int col = 0; col+ker.size <= fimage.width; ++col){
+            double new_pixel = 0;
+
+            for(int k_row = 0; k_row < ker.size; k_row++ ){
+                for (int k_col = 0; k_col < ker.size; k_col++)
+                {
+                   new_pixel += fimage.pixels[row+k_row][col+k_col] * ker.kernel[k_row][k_col];
+                }
+                
+            }
+        convolved_fimage.pixels[row][col] = new_pixel;
+
+        }
+    }
+
+    return convolved_fimage;
+}
+
+ConvKernel gx_kernel(void){
+    ConvKernel gx_kernel = {0}; 
+    gx_kernel.size=3;
+    double m[3][3] = {{-1,0,1},
+                      {-2,0,2},
+                      {-1,0,1}};
+
+    for(int i=0;i<3;++i){
+        for(int j=0;j<3;++j){
+        gx_kernel.kernel[i][j]=m[i][j];
+        }
+    }
+    
+    return gx_kernel;
+}
+
+ConvKernel gy_kernel(void){
+    ConvKernel gy_kernel = {0}; 
+    gy_kernel.size=3;
+    double m[3][3] = {{-1,-2,-1},
+                      {0,0,0},
+                      {1,2,1}};
+
+    for(int i=0;i<3;++i){
+        for(int j=0;j<3;++j){
+        gy_kernel.kernel[i][j]=m[i][j];
+        }
+    }
+    
+    return gy_kernel;
+}
+
+
 Image extract_edges(Image image){
-    Image edges;
-    edges.height = 0;
-    edges.width = 0;
-    return edges;
+    FImage fimage;
+
+    FImage gx_image;
+    FImage gy_image;
+
+    FImage g_image;
+    Image done_image;
+
+    fimage = gray_FImage(image);
+
+    gx_image = convolve_fimage(fimage,gx_kernel());
+    gy_image = convolve_fimage(fimage,gy_kernel());
+    
+    g_image.height = gx_image.height;
+    g_image.width = gx_image.width;
+
+    double g_max = 0;
+    double g_min = 1000;
+    
+    for(int row = 0; row<g_image.height;row++){
+        for(int col = 0; col<g_image.width;col++){
+            g_image.pixels[row][col] = sqrt(pow(gx_image.pixels[row][col],2) + pow(gy_image.pixels[row][col],2));
+            if(g_image.pixels[row][col]>g_max){
+                g_max = g_image.pixels[row][col];
+            }
+            if(g_image.pixels[row][col]<g_min){
+                g_min = g_image.pixels[row][col];
+            }
+        }
+    }
+
+    for(int row = 0; row<g_image.height;row++){
+        for(int col = 0; col<g_image.width;col++){
+            
+            g_image.pixels[row][col] = ((g_image.pixels[row][col] - g_min)/(g_max-g_min))*255;
+        }
+    }
+
+    done_image.height = g_image.height;
+    done_image.width = g_image.width;
+     for(int row = 0; row<g_image.height;row++){
+        for(int col = 0; col<g_image.width;col++){
+            done_image.pixels[row][col].r = floor(g_image.pixels[row][col]);
+            done_image.pixels[row][col].g = floor(g_image.pixels[row][col]);
+            done_image.pixels[row][col].b = floor(g_image.pixels[row][col]);
+        }
+    }
+
+    return done_image;
 }

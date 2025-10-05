@@ -220,9 +220,11 @@ ConvKernel generate_average_kernel(int size){
     ConvKernel ker;
     ker.size = 0;
 
+
+
     for(int row = 0; row < size; row++){
         for(int col = 0; col < size; col++){
-            ker.kernel[row][col] = 1/(size*size);
+            ker.kernel[row][col] = 1.0/( (double)(size) * (double)(size) );
         }
     }
     ker.size = size;

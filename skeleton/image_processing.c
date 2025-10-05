@@ -218,20 +218,28 @@ Image convolve_image(Image image, ConvKernel ker){
 
 ConvKernel generate_average_kernel(int size){
     ConvKernel ker;
-    ker.size = 0;
+    ker.size = size;
 
     for(int row = 0; row < size; row++){
         for(int col = 0; col < size; col++){
             ker.kernel[row][col] = 1/(size*size);
         }
     }
-    ker.size = size;
+
     return ker;
 }
 
 ConvKernel generate_gaussian_kernel(int r, double sigma){
     ConvKernel ker;
-    ker.size = 0;
+    ker.size = 2*r+1;
+
+    for(int row = 0; row < ker.size; row++){
+        
+        for(int col = 0; col < ker.size; col++){
+            ker.kernel[row][col] = (1.0/(2.0*acos(-1.0)*sigma*sigma))*exp((-1/(2*sigma*sigma))*((row-r)*(row-r)+(col-r)*(col-r))) ;
+        }
+    }
+
     return ker;
 }
 

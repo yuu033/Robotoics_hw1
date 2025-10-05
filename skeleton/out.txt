@@ -19,7 +19,14 @@ What would you like to do?
 3. Average Kernel Generation 
 4. Gaussian Kernel Generation 
 5. Extract Game Test
-Choose Option (1-5): kernel radius: kernel stddev: What would you like to do?
+Choose Option (1-5): kernel radius: kernel stddev: 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
+0.000 0.001 0.007 0.013 0.007 0.001 0.000 
+0.000 0.007 0.055 0.111 0.055 0.007 0.000 
+0.000 0.013 0.111 0.225 0.111 0.013 0.000 
+0.000 0.007 0.055 0.111 0.055 0.007 0.000 
+0.000 0.001 0.007 0.013 0.007 0.001 0.000 
+0.000 0.000 0.000 0.000 0.000 0.000 0.000 
+What would you like to do?
 0. Open another file
 1. Print Image in the Terminal
 2. Downscale

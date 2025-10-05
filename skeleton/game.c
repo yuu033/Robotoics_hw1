@@ -156,7 +156,6 @@ void print_game(Game game){
 Game extract_game(Image image){
     image = grayscale_image(image);
     Game game;
-
     //You may store the image temporarily here
     Image temp;
     temp.height = image.height/3;
@@ -182,26 +181,213 @@ Game extract_game(Image image){
 }
 
 //TASK 6
+
+int O_win_check(Game game){
+    for(int row = 0; row<3;row++){
+        if(game.grid[row][0] == 1 && game.grid[row][1] == 1 && game.grid[row][2] == 1){
+            return 1;
+        }
+    }
+
+    for(int col = 0; col<3;col++){
+        if(game.grid[0][col] == 1 && game.grid[0][col] == 1 && game.grid[0][col] == 1){
+            return 1;
+        }
+    }
+
+    if(game.grid[0][0] == 1 && game.grid[1][1] == 1 && game.grid[2][2] == 1 ){
+        return 1;
+    }
+
+    if(game.grid[0][2] == 1 && game.grid[1][1] == 1 && game.grid[2][0] == 1){
+        return 1;
+    }
+
+}
+
+int X_win_check(Game game){
+    for(int row = 0; row<3;row++){
+        if(game.grid[row][0] == 0 && game.grid[row][1] == 0 && game.grid[row][2] == 0){
+            return 1;
+        }
+    }
+
+    for(int col = 0; col<3;col++){
+        if(game.grid[0][col] == 0 && game.grid[0][col] == 0 && game.grid[0][col] == 0){
+            return 1;
+        }
+    }
+
+    if(game.grid[0][0] == 0 && game.grid[1][1] == 0 && game.grid[2][2] == 0 ){
+        return 1;
+    }
+
+    if(game.grid[0][2] == 0 && game.grid[1][1] == 0 && game.grid[2][0] == 0){
+        return 1;
+    }
+
+}
+
+
 int report_winning_move(Game game){
     // You play as O
     // return 0 if there are not possible winning moves
     // return 1-9 if there are any
     // return 10 if there are more than one possible ways to win
+    int count =0;
+    int move_to_win = 0;
+    for(int row = 0; row<3; row++){
+        for(int col = 0; col<3; col++){
+            if(game.grid[row][col] != 2){
+                continue;
+            }
+            game.grid[row][col] = 1;
+            if(win_check(game)){
+                count++;
+                move_to_win = 3*row + col +1;
+            }
 
-    return 0;
+            game.grid[row][col] = 2;
+        }
+    }
+
+    if(count == 0){
+        return 0;
+    }
+    if(count > 1){
+        return 10;
+    }
+    return move_to_win;
+
+}
+
+Game build_gameboard(GameHistory* gamehistory){
+    Game game;
+    for (int row = 0; row < 3; row++)
+        for (int col = 0; col < 3; col++)
+            game.grid[row][col] = 2;
+
+    for (int turn = 0; turn < gamehistory->turn; turn++) {
+        int row = gamehistory->grid[turn][0];
+        int col = gamehistory->grid[turn][1];
+        game.grid[row][col] = gamehistory->grid[turn][2];
+    }
+
 }
 
 // Complete TASK 7 below
 int play_interactively(GameHistory* game_history){
-    
-    //Move/Copy/Edit the following print lines appropriately. You may add your own scanf.
-    printf("Please enter your move (%c):", 'O');
-    printf("%c wins\n", 'O');
-    printf("Game History:\n");
-    printf("No one wins\n");
+    Game game;
+    game = build_gameboard(game_history);
+    int turn_switch = game_history->turn%2;
 
-    return 0;
+    while(turn_switch == 0){
+        int Irow = 0;
+        int Icol = 0;
+        printf("Please enter your move (%c):", 'X');
+        scanf("%d %d",&Irow,&Icol);
+        if(Irow < 0 || Irow > 2 || Icol < 0 || Icol > 2 || game.grid[Irow][Icol] != 2 ){
+            continue;
+        }
+        else{
+            game.grid[Irow][Icol] = 0;
+            print_game(game);
+            game_history->grid[game_history->turn][0] = Irow;
+            game_history->grid[game_history->turn][1] = Icol;
+            game_history->grid[game_history->turn][2] = 0;
+            game_history->turn += 1;
+            if(X_win_check(game)){
+                printf("%c wins\n", 'X');
+                Game history;
+                for (int row=0;row<3;row++){
+                    for (int col=0;col<3;col++){
+                        history.grid[row][col]=2;
+                    }
+                }
+                printf("Game History:\n");
+                for(int Output_turn = 0; Output_turn < game_history->turn; Output_turn++){
+                    int row = game_history->grid[Output_turn][0];
+                    int col = game_history->grid[Output_turn][1];
+                    history.grid[row][col] = game_history->grid[Output_turn][2];
+                    print_game(history);
+                }
+                return 0;
+            }
+            
+            if(game_history->turn == 9){
+                printf("No one wins");
+                return 0;
+            }
+            else{
+                return 1;
+            }
+
+        }
+
+    }
+
+    while(turn_switch == 1){
+        int Irow = 0;
+        int Icol = 0;
+        printf("Please enter your move (%c):", 'O');
+        scanf("%d %d",&Irow,&Icol);
+        if(Irow < 0 || Irow > 2 || Icol < 0 || Icol > 2 || game.grid[Irow][Icol] != 2 ){
+            continue;
+        }
+        else{
+            game.grid[Irow][Icol] = 1;
+            print_game(game);
+            game_history->grid[game_history->turn][0] = Irow;
+            game_history->grid[game_history->turn][1] = Icol;
+            game_history->grid[game_history->turn][2] = 1;
+            game_history->turn += 1;
+            if(O_win_check(game)){
+                printf("%c wins\n", 'O');
+                Game history;
+                for (int row=0;row<3;row++){
+                    for (int col=0;col<3;col++){
+                        history.grid[row][col]=2;
+                    }
+                }
+                printf("Game History:\n");
+                for(int Output_turn = 0; Output_turn < game_history->turn; Output_turn++){
+                    int row = game_history->grid[Output_turn][0];
+                    int col = game_history->grid[Output_turn][1];
+                    history.grid[row][col] = game_history->grid[Output_turn][2];
+                    print_game(history);
+                }
+                return 0;
+            }
+
+            if(game_history->turn == 9){
+                printf("No one wins\n");
+                return 0;
+            }
+            else{
+                return 1;
+            }
+            
+
+
+        }
+    }
+
+
+
+    //Move/Copy/Edit the following print lines appropriately. You may add your own scanf.
+    // printf("Please enter your move (%c):", 'O');
+    // printf("%c wins\n", 'O');
+    // printf("Game History:\n");
+    // printf("No one wins\n");
+
+    return 1;
 }
 
 void initialize_game_history(GameHistory* game_history){
+    for(int i = 0; i<9;i++){
+        game_history->grid[i][0] = 0;
+        game_history->grid[i][1] = 0;
+        game_history->grid[i][2] = 2;
+    }
+    game_history->turn = 0;
 }

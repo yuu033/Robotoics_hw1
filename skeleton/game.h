@@ -21,7 +21,8 @@ int report_winning_move(Game game);
 
 // Complete TASK 7 below
 typedef struct{
-    
+    int turn;
+    int grid[9][3];    
 } GameHistory;
 
 void initialize_game_history(GameHistory* game_history);

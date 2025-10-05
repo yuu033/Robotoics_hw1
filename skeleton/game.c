@@ -203,6 +203,8 @@ int O_win_check(Game game){
         return 1;
     }
 
+    return 0;
+
 }
 
 int X_win_check(Game game){
@@ -213,7 +215,7 @@ int X_win_check(Game game){
     }
 
     for(int col = 0; col<3;col++){
-        if(game.grid[0][col] == 0 && game.grid[0][col] == 0 && game.grid[0][col] == 0){
+        if(game.grid[0][col] == 0 && game.grid[1][col] == 0 && game.grid[2][col] == 0){
             return 1;
         }
     }
@@ -225,6 +227,8 @@ int X_win_check(Game game){
     if(game.grid[0][2] == 0 && game.grid[1][1] == 0 && game.grid[2][0] == 0){
         return 1;
     }
+
+    return 0;
 
 }
 
@@ -242,7 +246,7 @@ int report_winning_move(Game game){
                 continue;
             }
             game.grid[row][col] = 1;
-            if(win_check(game)){
+            if(O_win_check(game)){
                 count++;
                 move_to_win = 3*row + col +1;
             }
@@ -272,7 +276,7 @@ Game build_gameboard(GameHistory* gamehistory){
         int col = gamehistory->grid[turn][1];
         game.grid[row][col] = gamehistory->grid[turn][2];
     }
-
+    return game;
 }
 
 // Complete TASK 7 below
@@ -281,13 +285,13 @@ int play_interactively(GameHistory* game_history){
     game = build_gameboard(game_history);
     int turn_switch = game_history->turn%2;
 
-    while(turn_switch == 0){
+    if(turn_switch == 0){
         int Irow = 0;
         int Icol = 0;
         printf("Please enter your move (%c):", 'X');
         scanf("%d %d",&Irow,&Icol);
         if(Irow < 0 || Irow > 2 || Icol < 0 || Icol > 2 || game.grid[Irow][Icol] != 2 ){
-            continue;
+            return 1;
         }
         else{
             game.grid[Irow][Icol] = 0;
@@ -315,7 +319,7 @@ int play_interactively(GameHistory* game_history){
             }
             
             if(game_history->turn == 9){
-                printf("No one wins");
+                printf("No one wins\n");
                 return 0;
             }
             else{
@@ -326,13 +330,13 @@ int play_interactively(GameHistory* game_history){
 
     }
 
-    while(turn_switch == 1){
+    if(turn_switch == 1){
         int Irow = 0;
         int Icol = 0;
         printf("Please enter your move (%c):", 'O');
         scanf("%d %d",&Irow,&Icol);
         if(Irow < 0 || Irow > 2 || Icol < 0 || Icol > 2 || game.grid[Irow][Icol] != 2 ){
-            continue;
+            return 1;
         }
         else{
             game.grid[Irow][Icol] = 1;
